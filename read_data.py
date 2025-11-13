@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-test_number = 0 # between 0 and 89
+test_number = 3 # between 0 and 89
 
 data = np.load('training-set/%03d.npz' % test_number)
 
@@ -21,13 +21,13 @@ disp_mag = np.linalg.norm(disp[-1], axis=-1)
 plt.figure(figsize=(15, 5))
 
 plt.subplot(1, 3, 1)
-plt.pcolor(label, cmap='gray')
+plt.pcolor(X[...,0],X[...,1], label, cmap='gray')
 plt.title('Label')
 plt.colorbar(label='material class')
 
 plt.subplot(1, 3, 2)
 plt.title('Displacement Magnitude')
-plt.pcolor(X[...,0], X[...,1], disp_mag, cmap='jet')
+plt.pcolor(X[...,0], X[...,1], disp[-1,:,:,1], cmap='jet')
 plt.colorbar(label='Displacement Magnitude [mm]')
 
 plt.subplot(1, 3, 3)
