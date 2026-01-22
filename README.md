@@ -45,3 +45,74 @@ This plot is generated with [read_data.py](read_data.py):
 
 ![](images/test_000.png)
 
+
+## Evaluation Metrics
+
+The evaluation metrics used for the forward and inverse models are located in the files `evaluate_forward.py` and `evaluate_inverse.py`, respectively. These scripts can be used to compute the metrics for model predictions against the ground truth data.
+
+## Docker Model Testing
+
+The repository includes Dockerized versions of both forward and inverse models for easy testing and deployment.
+Edit the Dockerfiles located in the `Docker/forward/` and `Docker/inverse/` directories to customize the models as needed.
+Also, you need to implement your model logic in the `run_model_*_docker.py` scripts in the respective directories.
+
+
+### Building Docker Images
+
+Build the forward and inverse model images:
+
+```bash
+# Build forward model image
+docker build -t mechanical-mnist-forward:latest Docker/forward/
+
+# Build inverse model image
+docker build -t mechanical-mnist-inverse:latest Docker/inverse/
+```
+
+### Testing the Forward Model
+
+The forward model predicts displacement fields and forces from material labels and instron displacement:
+
+```bash
+# Run forward model on a sample file
+docker run --rm -v $PWD:/data mechanical-mnist-forward:latest /data/training-set/000.npz
+
+# Run with output file
+docker run --rm -v $PWD:/data mechanical-mnist-forward:latest /data/training-set/000.npz --output /data/output_forward.npz
+```
+
+### Testing the Inverse Model
+
+The inverse model predicts material labels from displacement and force data:
+
+```bash
+# Run inverse model on a sample file
+docker run --rm -v $PWD:/data mechanical-mnist-inverse:latest /data/training-set/000.npz
+
+# Run with output file
+docker run --rm -v $PWD:/data mechanical-mnist-inverse:latest /data/training-set/000.npz --output /data/output_inverse.npz
+```
+
+### View Help Messages
+
+```bash
+# Forward model help
+docker run --rm mechanical-mnist-forward:latest --help
+
+# Inverse model help
+docker run --rm mechanical-mnist-inverse:latest --help
+```
+
+### Batch Testing
+
+Test models on multiple files:
+
+```bash
+# Test forward model on first 3 files
+for i in {0..2}; do
+  docker run --rm -v $PWD:/data mechanical-mnist-forward:latest /data/training-set/$(printf "%03d" $i).npz
+done
+```
+
+**Note:** The `--rm` flag automatically removes the container after it exits, and `-v $PWD:/data` mounts the current directory to `/data` inside the container. If using Podman instead of Docker, simply replace `docker` with `podman` in all commands above.
+
