@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-test_number = 3 # between 0 and 89
+test_number = 9 # between 0 and 89
 
 data = np.load('training-set/%03d.npz' % test_number)
 
@@ -21,7 +21,7 @@ disp_mag = np.linalg.norm(disp[-1], axis=-1)
 plt.figure(figsize=(15, 5))
 
 plt.subplot(1, 3, 1)
-plt.pcolor(X[...,0],X[...,1], label, cmap='gray')
+plt.pcolor(label, cmap='gray')
 plt.title('Label')
 plt.colorbar(label='material class')
 
