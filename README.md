@@ -40,6 +40,8 @@ These arrays store the following data:
 - `instron_force`: stores the forces measured by the uniaxial testing machine for the displacements `instron_disp` in [N]. Shape: [number of time steps,]
 - `label`: Stores the material class labels for each pixel. Shape: [Nx, Ny]
 
+There are 5 distinct materials, printed in two possible orientations: 0 and 90 degrees with respect to the printing direction. Therefore, there are 10 possible labels from the combination of material and orientation. Only four combinations appear in the training and test sets of the heterogeneous samples: (8,0), (9,3), (8,4), (9,7). With these combinations, all 5 materials are represented in the dataset, in at least one of their orientations.
+
 
 This plot is generated with [read_data.py](read_data.py):
 
