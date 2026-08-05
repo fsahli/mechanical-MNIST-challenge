@@ -48,6 +48,15 @@ This plot is generated with [read_data.py](read_data.py):
 ![](images/test_000.png)
 
 
+## Label Orientation Correction (August 2026)
+
+Some samples were mounted flipped during mechanical testing, and the original release contained `label` arrays whose orientation was inconsistent with the DIC displacement fields for a subset of tests. The labels have been corrected by checking each label against the strain field computed from that test's own DIC displacements (the stiff inclusion strains less, so the digit is visible in the strain field), followed by visual review. In this release, 76 of the 90 `label` arrays were flipped up–down relative to the original release; the displacement and force data are unchanged.
+
+The per-test record of the correction is in [label_orientation_corrections.csv](label_orientation_corrections.csv). For a handful of tests the material contrast is too low for the digit to be visible in the strain field; these are marked `weak signal (best estimate)` in the record and carry the most likely orientation.
+
+If you downloaded the training set before this correction, please re-download it.
+
+
 ## Evaluation Metrics
 
 The evaluation metrics used for the forward and inverse models are located in the files `evaluate_forward.py` and `evaluate_inverse.py`, respectively. These scripts can be used to compute the metrics for model predictions against the ground truth data.
