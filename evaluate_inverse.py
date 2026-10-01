@@ -5,17 +5,18 @@ import numpy as np
 
 
 
-def run_model(displacements, instron_disp, instron_force):
+def run_model(DIC_disp, instron_disp, instron_force, DIC_X):
     """Placeholder function for the inverse model prediction.
     This function should be replaced with the actual model implementation.
     Inputs:
-        displacements: np.ndarray of shape (T, H, W, 2), observed displacements
+        DIC_disp: np.ndarray of shape (T, H, W, 2), observed displacements
         instron_disp: np.ndarray of shape (T,), instron displacement values
         instron_force: np.ndarray of shape (T,), instron force values
+        DIC_X: np.ndarray of shape (H, W, 2), coordinates of the DIC grid in [mm]
     Outputs:
         predicted_label: np.ndarray of shape (H, W), predicted material class labels
     """
-    predicted_label = np.zeros(displacements.shape[1:3], dtype=np.int32)
+    predicted_label = np.zeros(DIC_disp.shape[1:3], dtype=np.int32)
 
     return predicted_label
 
@@ -58,11 +59,11 @@ if __name__ == "__main__":
     data = np.load('training-set/%03d.npz' % test_number) 
 
     X = data['DIC_X']
-    disp = data['DIC_disp']
+    DIC_disp = data['DIC_disp']
     instron_disp = data['instron_disp']
     instron_force = data['instron_force']
     label = data['label']
 
-    predicted_label = run_model(disp, instron_disp, instron_force)
+    predicted_label = run_model(DIC_disp, instron_disp, instron_force, X)
     dice_score = evaluate_label(label, predicted_label)
     print(f"DICE score: {dice_score:.6f}")

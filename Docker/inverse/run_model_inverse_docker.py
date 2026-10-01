@@ -16,29 +16,30 @@ import numpy as np
 import argparse
 
 
-def run_model(disp, forces, instron_disp):
+def run_model(DIC_disp, instron_disp, instron_force, DIC_X):
     """Dummy function for the inverse model prediction.
-    
+
     This is a placeholder that should be replaced with your actual model implementation.
     The inverse model predicts material properties given displacement and force data.
-    
+
     Inputs:
-        disp: np.ndarray of shape (T, H, W, 2), displacement field
-        forces: np.ndarray of shape (T,), measured forces
+        DIC_disp: np.ndarray of shape (T, H, W, 2), observed displacement field
         instron_disp: np.ndarray of shape (T,), instron displacement values
-    
+        instron_force: np.ndarray of shape (T,), measured forces
+        DIC_X: np.ndarray of shape (H, W, 2), coordinates of the DIC grid in [mm]
+
     Outputs:
         predicted_label: np.ndarray of shape (H, W), predicted material class labels
     """
     # Get spatial dimensions from displacement field
-    H, W = disp.shape[1:3]
-    
+    H, W = DIC_disp.shape[1:3]
+
     # TODO: Replace with actual model logic
     # For now, return a dummy prediction (all zeros, representing one material class)
     predicted_label = np.zeros((H, W), dtype=int)
-    
-    print(f"Processing {disp.shape[0]} time steps for spatial domain {H}x{W}")
-    
+
+    print(f"Processing {DIC_disp.shape[0]} time steps for spatial domain {H}x{W}")
+
     return predicted_label
 
 
@@ -73,18 +74,20 @@ def main():
         sys.exit(1)
     
     # Extract required fields for inverse problem
-    disp = data['disp']
-    forces = data['forces']
+    DIC_disp = data['DIC_disp']
     instron_disp = data['instron_disp']
-    
+    instron_force = data['instron_force']
+    DIC_X = data['DIC_X']
+
     print(f"Data loaded successfully:")
-    print(f"  - Displacement field shape: {disp.shape}")
-    print(f"  - Forces shape: {forces.shape}")
+    print(f"  - Displacement field shape: {DIC_disp.shape}")
+    print(f"  - Forces shape: {instron_force.shape}")
     print(f"  - Instron displacement shape: {instron_disp.shape}")
-    
+    print(f"  - DIC_X shape: {DIC_X.shape}")
+
     # Run the model
     print("Running inverse model...")
-    predicted_label = run_model(disp, forces, instron_disp)
+    predicted_label = run_model(DIC_disp, instron_disp, instron_force, DIC_X)
     
     print(f"Model completed:")
     print(f"  - Predicted label shape: {predicted_label.shape}")

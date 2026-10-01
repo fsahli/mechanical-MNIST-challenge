@@ -16,15 +16,16 @@ import numpy as np
 import argparse
 
 
-def run_model(label, instron_disp):
+def run_model(label, instron_disp, DIC_X):
     """Dummy function for the forward model prediction.
-    
+
     This is a placeholder that should be replaced with your actual model implementation.
-    
+
     Inputs:
         label: np.ndarray of shape (H, W), material class labels
         instron_disp: np.ndarray of shape (T,), instron displacement values
-    
+        DIC_X: np.ndarray of shape (H, W, 2), coordinates of the DIC grid in [mm]
+
     Outputs:
         predicted_disp: np.ndarray of shape (T, H, W, 2), predicted displacements
         predicted_forces: np.ndarray of shape (T,), predicted forces
@@ -72,15 +73,17 @@ def main():
     # Extract required fields
     label = data['label']
     instron_disp = data['instron_disp']
-    
+    DIC_X = data['DIC_X']
+
 
     print(f"Data loaded successfully:")
     print(f"  - Label shape: {label.shape}")
     print(f"  - Instron displacement shape: {instron_disp.shape}")
-    
+    print(f"  - DIC_X shape: {DIC_X.shape}")
+
     # Run the model
     print("Running model...")
-    predicted_disp, predicted_forces = run_model(label, instron_disp)
+    predicted_disp, predicted_forces = run_model(label, instron_disp, DIC_X)
     
     print(f"Model completed:")
     print(f"  - Predicted displacement shape: {predicted_disp.shape}")

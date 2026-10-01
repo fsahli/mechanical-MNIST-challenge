@@ -82,7 +82,7 @@ docker build -t mechanical-mnist-inverse:latest Docker/inverse/
 
 ### Testing the Forward Model
 
-The forward model predicts displacement fields and forces from material labels and instron displacement:
+The forward model predicts displacement fields and forces from material labels, instron displacement, and the DIC coordinate grid (`DIC_X`), since the physical pixel spacing and extent of the sample vary across tests:
 
 ```bash
 # Run forward model on a sample file
@@ -94,7 +94,7 @@ docker run --rm -v $PWD:/data mechanical-mnist-forward:latest /data/training-set
 
 ### Testing the Inverse Model
 
-The inverse model predicts material labels from displacement and force data:
+The inverse model predicts material labels from displacement and force data, along with the DIC coordinate grid (`DIC_X`):
 
 ```bash
 # Run inverse model on a sample file
