@@ -5,13 +5,12 @@ import numpy as np
 
 
 
-def run_model(label, instron_disp, DIC_X):
+def run_model(label, instron_disp):
     """Placeholder function for the forward model prediction.
     This function should be replaced with the actual model implementation.
     Inputs:
         label: np.ndarray of shape (H, W), material class labels
         instron_disp: np.ndarray of shape (T,), instron displacement values
-        DIC_X: np.ndarray of shape (H, W, 2), coordinates of the DIC grid in [mm]
     Outputs:
         predicted_disp: np.ndarray of shape (T, H, W, 2), predicted displacements
         predicted_forces: np.ndarray of shape (T,), predicted forces
@@ -62,7 +61,7 @@ if __name__ == "__main__":
     instron_disp = data['instron_disp']
     instron_force = data['instron_force']
     label = data['label']
-    predicted_disp, predicted_forces = run_model(label, instron_disp, X) # here we will actually called the submitted docker model
+    predicted_disp, predicted_forces = run_model(label, instron_disp) # here we will actually called the submitted docker model
 
     # Evaluate displacements
     disp_mse = evaluate_displacements(disp, predicted_disp)
